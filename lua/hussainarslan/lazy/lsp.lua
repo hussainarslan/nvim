@@ -28,6 +28,7 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
+                "pyright",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -64,6 +65,13 @@ return {
                                 }
                             }
                         }
+                    }
+                end,
+                ["pyright"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup {
+                        capabilities = capabilities,
+                        root_dir = lspconfig.util.root_pattern("pyrightconfig.json", ".git", "setup.py", "setup.cfg", "requirements.txt", "Pipfile")
                     }
                 end,
             }
